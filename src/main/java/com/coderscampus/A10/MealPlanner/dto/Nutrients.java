@@ -1,4 +1,4 @@
-package com.coderscampus.A10.MealPlanner.model;
+package com.coderscampus.A10.MealPlanner.dto;
 
 public class Nutrients {
     private Double calories;

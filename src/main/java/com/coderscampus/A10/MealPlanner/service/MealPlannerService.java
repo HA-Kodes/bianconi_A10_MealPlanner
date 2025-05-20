@@ -1,8 +1,8 @@
 package com.coderscampus.A10.MealPlanner.service;
 
 import com.coderscampus.A10.MealPlanner.config.SpoonacularConfig;
-import com.coderscampus.A10.MealPlanner.model.WeekResponse;
-import com.coderscampus.A10.MealPlanner.model.DayResponse;
+import com.coderscampus.A10.MealPlanner.dto.WeekResponse;
+import com.coderscampus.A10.MealPlanner.dto.DayResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.stereotype.Service;

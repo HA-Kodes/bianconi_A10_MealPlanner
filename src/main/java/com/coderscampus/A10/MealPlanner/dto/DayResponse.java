@@ -1,10 +1,13 @@
-package com.coderscampus.A10.MealPlanner.model;
+package com.coderscampus.A10.MealPlanner.dto;
 import java.util.List;
 
 public class DayResponse {
 
     private List<Meal> meals;
     private Nutrients nutrients;
+
+    public DayResponse() {
+    }
 
     public DayResponse(List<Meal> meals, Nutrients nutrients) {
         this.meals = meals;

@@ -5,7 +5,7 @@
 //
 //Also if u want me to review ur code or check if u are on the right track dont be afraid to send me a message on wyzant
 
-package com.coderscampus.A10.MealPlanner.model; // Ensure it's inside the correct package
+package com.coderscampus.A10.MealPlanner.dto; // Ensure it's inside the correct package
 
 // POJO class definition - Declares private variables / fields        // ** ANOTHER WAY OF WRITING THIS POJO to Define Structure in data model
 public class Meal {                                                   // public class Meal {

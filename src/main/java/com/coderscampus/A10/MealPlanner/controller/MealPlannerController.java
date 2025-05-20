@@ -1,12 +1,10 @@
 package com.coderscampus.A10.MealPlanner.controller;
 
-import com.coderscampus.A10.MealPlanner.config.SpoonacularConfig;
-import com.coderscampus.A10.MealPlanner.model.DayResponse;
-import com.coderscampus.A10.MealPlanner.model.WeekResponse;
+import com.coderscampus.A10.MealPlanner.dto.DayResponse;
+import com.coderscampus.A10.MealPlanner.dto.WeekResponse;
 import com.coderscampus.A10.MealPlanner.service.MealPlannerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @RequestMapping("/api")
 @RestController
