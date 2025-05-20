@@ -1,60 +1,59 @@
 package com.coderscampus.A10.MealPlanner.controller;
 
-import com.coderscampus.A10.MealPlanner.config.SpoonacularConfig;  // handles configuration for meal planning
-import com.coderscampus.A10.MealPlanner.model.DayResponse;         // stores meal plan results
-import com.coderscampus.A10.MealPlanner.model.WeekResponse;        // store meal plan results
-import org.springframework.http.ResponseEntity;                    // helps format API responses
+import com.coderscampus.A10.MealPlanner.config.SpoonacularConfig;
+import com.coderscampus.A10.MealPlanner.model.DayResponse;
+import com.coderscampus.A10.MealPlanner.model.WeekResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;                // used for making API calls (like asking a website for data)
+import org.springframework.web.client.RestTemplate;
 
-@RequestMapping("/api") // This tells the program that all URLs starting with /api are handled here
-@RestController         // This means it's a controller that handles web requests and returns responses
-public class MealPlannerController { // This is our class that controls meal planning requests
+@RequestMapping("/api")
+@RestController
+public class MealPlannerController {
     // create and define variables
-    private SpoonacularConfig spoon; // spoon is where we get meal data
-    private RestTemplate rest;       // rest helps send and receive data from the internet
+    private SpoonacularConfig spoon;
+    private RestTemplate rest;
 
     // create a Constructor
-    public MealPlannerController(SpoonacularConfig spoon, RestTemplate rest) { // constructor
-        this.spoon = spoon; // runs when a MealPlannerController is created
-        this.rest = rest;   // sets the values of spoon and rest by pulling data from SpoonaclarConfig class
+    public MealPlannerController(SpoonacularConfig spoon, RestTemplate rest) {
+        this.spoon = spoon;
+        this.rest = rest;
     }
 
     // Setting up an API Endpoint
-    @GetMapping("/mealplanner/week")   // this tells the program: "When someone visits /api/mealplanner/week, run the next function."
+    @GetMapping("/mealplanner/week")
 
-    // make a function (copy from A10 desc) ad define the Meal Plan Function
-    public ResponseEntity<WeekResponse> getWeekMeals(String numCalories, String diet, String exclusions) {  // this function fetches meal plans based on:
-        String url = buildUrl("week", numCalories, diet, exclusions);                            // numCalories, diet, exclusions (ingredients to avoid)
+    public ResponseEntity<WeekResponse> getWeekMeals(String numCalories, String diet, String exclusions) {
+        String url = buildUrl("week", numCalories, diet, exclusions);
         WeekResponse response = rest.getForObject(url, WeekResponse.class);
-        return ResponseEntity.ok(response);                                                                 // it builds a URL, sends it to Spoonacular's API, and returns meal plan data
+        return ResponseEntity.ok(response);
     }
 
     // Setting up an API Endpoint
-    @GetMapping("/mealplanner/day")   // this tells the program: "When someone visits /api/mealplanner/week, run the next function."
+    @GetMapping("/mealplanner/day")
 
-    // make a function (copy from A10 desc) ad define the Meal Plan Function
-    public ResponseEntity<DayResponse> getDayMeals(String numCalories, String diet, String exclusions) {  // this function fetches meal plans based on:
-        String url = buildUrl("day", numCalories, diet, exclusions);                            // numCalories, diet, exclusions (ingredients to avoid)
+    // make a function
+    public ResponseEntity<DayResponse> getDayMeals(String numCalories, String diet, String exclusions) {
+        String url = buildUrl("day", numCalories, diet, exclusions);
         DayResponse response = rest.getForObject(url, DayResponse.class);
-        return ResponseEntity.ok(response);                                                                 // it builds a URL, sends it to Spoonacular's API, and returns meal plan data
+        return ResponseEntity.ok(response);
     }
 
     // Build the URL for API Calls
     private String buildUrl(String timeFrame, String numCalories, String diet, String exclusions) {
-        StringBuilder url = new StringBuilder(spoon.getMealPlanUrl())   // StringBuilder url builds a web address (URL) to request meal plans
-                .append("?timeFrame=").append(timeFrame)                // this calls from the function; it starts with Spoonacular's base URL and addon timeFrame ("week")
-                .append("&apiKey=").append(spoon.getApiKey());          // this calls from SpoonacularConfig.java; it starts with Spoonacular's base URL and addon apiKey
+        StringBuilder url = new StringBuilder(spoon.getMealPlanUrl())
+                .append("?timeFrame=").append(timeFrame)
+                .append("&apiKey=").append(spoon.getApiKey());
 
-        if (numCalories != null) {                                      // these if statements ck if values exist, and add them to the URL:
-            url.append("&targetCalories=").append(numCalories);         // Calories (&targetCalories=_
+        if (numCalories != null) {
+            url.append("&targetCalories=").append(numCalories);
         }
         if (diet != null) {
-            url.append("&diet=").append(diet);                          // Diet type (&diet=)
+            url.append("&diet=").append(diet);
         }
         if (exclusions != null) {
-            url.append("&exclude=").append(exclusions);                 // Exclude foods (&exclude=)
+            url.append("&exclude=").append(exclusions);
         }
-        return url.toString();                                          // returns the complete URL
+        return url.toString();
     }
 }
