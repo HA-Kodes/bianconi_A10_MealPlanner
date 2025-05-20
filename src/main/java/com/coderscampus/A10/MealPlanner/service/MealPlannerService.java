@@ -6,6 +6,9 @@ import com.coderscampus.A10.MealPlanner.model.DayResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Optional;
 
 @Service
 public class MealPlannerService {
@@ -19,31 +22,25 @@ public class MealPlannerService {
     }
 
     public ResponseEntity<WeekResponse> getWeekMeals(String numCalories, String diet, String exclusions) {
-        String url = buildUrl("week", numCalories, diet, exclusions);
+        String url = buildApiUrl("week", numCalories, diet, exclusions);
         WeekResponse response = rest.getForObject(url, WeekResponse.class);
         return ResponseEntity.ok(response);
     }
     public ResponseEntity<DayResponse> getDayMeals(String numCalories, String diet, String exclusions) {
-        String url = buildUrl("day", numCalories, diet, exclusions);
+        String url = buildApiUrl("day", numCalories, diet, exclusions);
         DayResponse response = rest.getForObject(url, DayResponse.class);
         return ResponseEntity.ok(response);
     }
 
-    // Build the URL for API Calls
-    private String buildUrl(String timeFrame, String numCalories, String diet, String exclusions) {
-        StringBuilder url = new StringBuilder(spoon.getMealPlanUrl())
-                .append("?timeFrame=").append(timeFrame)
-                .append("&apiKey=").append(spoon.getApiKey());
-
-        if (numCalories != null) {
-            url.append("&targetCalories=").append(numCalories);
-        }
-        if (diet != null) {
-            url.append("&diet=").append(diet);
-        }
-        if (exclusions != null) {
-            url.append("&exclude=").append(exclusions);
-        }
-        return url.toString();
+    // UriComponentsBuilder
+     private String buildApiUrl(String timeFrame, String calories, String diet, String exclusions) {
+        return UriComponentsBuilder.fromHttpUrl(spoon.getMealPlanUrl())
+            .queryParam("timeFrame", timeFrame)
+            .queryParam("apiKey", spoon.getApiKey())
+            .queryParamIfPresent("targetCalories", Optional.ofNullable(calories))
+            .queryParamIfPresent("diet", Optional.ofNullable(diet))
+            .queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
+            .build()
+            .toUriString();
     }
 }

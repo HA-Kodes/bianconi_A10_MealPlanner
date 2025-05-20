@@ -23,4 +23,7 @@ public class SpoonacularConfig {
     public String getMealPlanUrl() {
         return baseUrl + mealPlanPath;
     }
+    public String getMealPlanPath() {
+        return mealPlanPath;
+    }
 }
