@@ -1,6 +1,6 @@
 package com.coderscampus.A10.MealPlanner.dto;
 
-public class Meal {                                                                                                                         // public Meal() {}  // Default constructor (optional, but useful)
+public class Meal {
     private Long id;
     private String title;
     private String imageType;
